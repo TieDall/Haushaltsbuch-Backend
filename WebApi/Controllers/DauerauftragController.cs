@@ -80,6 +80,7 @@ namespace WebApi.Controllers
                         )
                     )
                     ||
+                    /* TODO */
                     (x.Intervall == Enums.Intervall.quartalsweise &&
                         /* Beginn */
                         x.Beginn >= beginnQuartal
