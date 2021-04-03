@@ -68,5 +68,65 @@ namespace WebApi.Controllers
             return CreatedAtAction("GetReport", new { id = report.Id }, report);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutReport(long id, [FromBody] Report report)
+        {
+            if (id != report.Id)
+            {
+                return BadRequest();
+            }
+
+            var deletedRows = new List<ReportRow>();
+            var reportRowEntities = _context.ReportRows.Where(x => x.ReportId == report.Id);
+
+            // delete rows
+            foreach (var item in reportRowEntities) 
+            {
+                if (!report.ReportRows.Any(x => x.Id == item.Id))
+                {
+                    deletedRows.Add(item);
+                }
+            }
+
+            if (deletedRows.Count > 0)
+            {
+                _context.ReportRows.RemoveRange(deletedRows);
+            }
+
+            // detach not deleted rows
+            foreach (var item in reportRowEntities)
+            {
+                if (!deletedRows.Any(x => x.Id == item.Id))
+                {
+                    _context.Entry(item).State = EntityState.Detached;
+                }
+            }
+
+            _context.Reports.Update(report);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ReportExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        private bool ReportExists(long id)
+        {
+            return _context.Reports.Any(e => e.Id == id);
+        }
+
     }
 }
