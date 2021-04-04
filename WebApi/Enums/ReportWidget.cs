@@ -8,7 +8,9 @@ namespace WebApi.Enums
     public enum ReportWidget
     {
         monatsAuswahl = 1,
-        jahresAuswahl = 2,
-        aktuellesVermoegen = 3
+        monatsBilanz = 2,
+        monatsAusgaben = 3,
+        monatsDauerauftraege = 4,
+        monatsBuchungen = 5
     }
 }

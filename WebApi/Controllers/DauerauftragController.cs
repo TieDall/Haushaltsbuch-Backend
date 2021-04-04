@@ -124,6 +124,38 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetDauerauftraegeByMonth/{year}/{month}")]
+        public async Task<ActionResult<IEnumerable<Dauerauftrag>>> GetDauerauftraegeByMonth(int year, int month)
+        {
+            var monthStart = new DateTime(year, month, 1);
+            var monthEnd = new DateTime(year, month, DateTime.DaysInMonth(year, month));
+            return await _context.Dauerauftraege
+                .Include(x => x.Kategorie)
+                .Where(x =>
+                    (
+                        x.Intervall == Enums.Intervall.monatlich &&
+                        DateTime.Compare(x.Beginn, monthEnd) <= 0 &&
+                        (x.Ende == null || DateTime.Compare((DateTime)x.Ende, monthStart) >= 0)
+                    )
+                    // TODO 
+                    //||
+                    //(
+                    //    x.Intervall == Enums.Intervall.quartalsweise
+                    //    && DateTime.Compare(x.Beginn, monthEnd) <= 0 
+                    //    && (x.Ende == null || DateTime.Compare((DateTime)x.Ende, monthStart) >= 0)
+                    //    && x.Beginn.Month % 3 == 0
+                    //)
+                    ||
+                    (
+                        x.Intervall == Enums.Intervall.jaehrlich
+                        && DateTime.Compare(x.Beginn, monthEnd) <= 0
+                        && (x.Ende == null || DateTime.Compare((DateTime)x.Ende, monthStart) >= 0)
+                        && x.Beginn.Month == month
+                    )
+                )
+                .ToListAsync();
+        }
+
         /// <summary>
         /// Gibt die Daueraufträge zu einer Bezeichnung und Kategorie zurück.
         /// </summary>
