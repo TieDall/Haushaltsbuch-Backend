@@ -13,6 +13,7 @@ namespace WebApi
         public DbSet<Buchung> Buchungen { get; set; }
         public DbSet<Dauerauftrag> Dauerauftraege { get; set; }
         public DbSet<Konfiguration> Konfigurationen { get; set; }
+        public DbSet<Gutschein> Gutscheine { get; set; }
 
         public DbSet<Report> Reports { get; set; }
         public DbSet<ReportRow> ReportRows { get; set; }
