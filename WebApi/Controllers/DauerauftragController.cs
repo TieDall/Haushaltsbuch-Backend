@@ -80,10 +80,9 @@ namespace WebApi.Controllers
                         )
                     )
                     ||
-                    /* TODO */
                     (x.Intervall == Enums.Intervall.quartalsweise &&
                         /* Beginn */
-                        x.Beginn >= beginnQuartal
+                        x.Beginn <= beginnQuartal
                         &&
                         /* Ende */
                         (
@@ -91,7 +90,7 @@ namespace WebApi.Controllers
                             || 
                             (
                                 x.Ende != null && 
-                                x.Ende.Value <= endeQuartal
+                                x.Ende.Value >= endeQuartal
                             )
                         )
                     )
@@ -129,6 +128,7 @@ namespace WebApi.Controllers
         {
             var monthStart = new DateTime(year, month, 1);
             var monthEnd = new DateTime(year, month, DateTime.DaysInMonth(year, month));
+
             return await _context.Dauerauftraege
                 .Include(x => x.Kategorie)
                 .Where(x =>
@@ -137,14 +137,26 @@ namespace WebApi.Controllers
                         DateTime.Compare(x.Beginn, monthEnd) <= 0 &&
                         (x.Ende == null || DateTime.Compare((DateTime)x.Ende, monthStart) >= 0)
                     )
-                    // TODO 
-                    //||
-                    //(
-                    //    x.Intervall == Enums.Intervall.quartalsweise
-                    //    && DateTime.Compare(x.Beginn, monthEnd) <= 0 
-                    //    && (x.Ende == null || DateTime.Compare((DateTime)x.Ende, monthStart) >= 0)
-                    //    && x.Beginn.Month % 3 == 0
-                    //)
+                    ||
+                    (
+                        x.Intervall == Enums.Intervall.quartalsweise
+                        && DateTime.Compare(x.Beginn, monthEnd) <= 0
+                        && (x.Ende == null || DateTime.Compare((DateTime)x.Ende, monthStart) >= 0)
+                        &&
+                        (
+                            ((x.Beginn.Month == 1 || x.Beginn.Month == 4 || x.Beginn.Month == 7 || x.Beginn.Month == 10)
+                            &&
+                            (month == 1 || month == 4 || month == 7 || month == 10))
+                            ||
+                            ((x.Beginn.Month == 2 || x.Beginn.Month == 5 || x.Beginn.Month == 8 || x.Beginn.Month == 11)
+                            &&
+                            (month == 2 || month == 5 || month == 8 || month == 11))
+                            ||
+                            ((x.Beginn.Month == 3 || x.Beginn.Month == 6 || x.Beginn.Month == 9 || x.Beginn.Month == 12)
+                            &&
+                            (month == 3 || month == 6 || month == 9 || month == 12))
+                        )
+                    )
                     ||
                     (
                         x.Intervall == Enums.Intervall.jaehrlich
