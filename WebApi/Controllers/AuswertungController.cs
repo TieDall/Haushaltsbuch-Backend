@@ -21,7 +21,7 @@ namespace WebApi.Controllers
         [HttpGet("GetVermoegen")]
         public async Task<ActionResult<decimal>> GetCurrentVermoegen()
         {
-            return CalcVermoegen();
+            return await CalcVermoegen();
         }
 
         [HttpGet("GetVermoegen/{beginnYear}/{beginnMonth}/{endYear}/{endMonth}")]
@@ -31,7 +31,7 @@ namespace WebApi.Controllers
 
             while (beginnYear != endYear || beginnMonth != endMonth)
             {
-                result.Add(CalcVermoegen(beginnYear, beginnMonth));
+                result.Add( await CalcVermoegen(beginnYear, beginnMonth));
 
                 if (beginnMonth < 12)
                 {
@@ -43,12 +43,12 @@ namespace WebApi.Controllers
                     beginnMonth = 1;
                 }
             }
-            result.Add(CalcVermoegen(beginnYear, beginnMonth));
+            result.Add(await CalcVermoegen(beginnYear, beginnMonth));
 
             return result;
         }
                 
-        private decimal CalcVermoegen(int? year = null, int? month = null)
+        private async Task<decimal> CalcVermoegen(int? year = null, int? month = null)
         {
             decimal result = 0;
 
@@ -72,7 +72,7 @@ namespace WebApi.Controllers
             var sumBuchungAusgabe = buchungen.Where(x => !x.IsEinnahme).Sum(x => x.Betrag);
 
             // Ermittle Summe Daueraufträge
-            var dauerauftraege = _context.Dauerauftraege.Where(x => x.Beginn <= monthToReturn).ToList();
+            var dauerauftraege =  await _context.Dauerauftraege.Where(x => x.Beginn <= monthToReturn).ToListAsync();
             // Ermittle Summe monatliche Daueraufträge
             var monatlicheDauerauftraege = dauerauftraege.Where(x => x.Intervall == Enums.Intervall.monatlich);
             decimal sumMonatlicheDauerauftraege = 0;
@@ -148,7 +148,7 @@ namespace WebApi.Controllers
         [HttpGet("GetBilanz")]
         public async Task<ActionResult<decimal>> GetCurrentBilanz() 
         {
-            return CalcBilanz();
+            return await CalcBilanz();
         }
 
         [HttpGet("GetBilanz/{beginnYear}/{beginnMonth}/{endYear}/{endMonth}")]
@@ -158,7 +158,7 @@ namespace WebApi.Controllers
 
             while (beginnYear != endYear || beginnMonth != endMonth)
             {
-                result.Add(CalcBilanz(beginnYear, beginnMonth));
+                result.Add(await CalcBilanz(beginnYear, beginnMonth));
 
                 if (beginnMonth < 12)
                 {
@@ -170,12 +170,12 @@ namespace WebApi.Controllers
                     beginnMonth = 1;
                 }
             }
-            result.Add(CalcBilanz(beginnYear, beginnMonth));
+            result.Add(await CalcBilanz(beginnYear, beginnMonth));
 
             return result;
         }
 
-        private decimal CalcBilanz(int? year = null, int? month = null)
+        private async Task<decimal> CalcBilanz(int? year = null, int? month = null)
         {
             decimal result = 0;
 
@@ -199,7 +199,7 @@ namespace WebApi.Controllers
             var sumBuchungAusgabe = buchungen.Where(x => !x.IsEinnahme).Sum(x => x.Betrag);
 
             // Ermittle Summe Daueraufträge
-            var dauerauftraege = _context.Dauerauftraege
+            var dauerauftraege = await _context.Dauerauftraege
                 .Include(x => x.Kategorie)
                 .Where(x =>
                     (
@@ -235,7 +235,7 @@ namespace WebApi.Controllers
                         && x.Beginn.Month == month
                     )
                 )
-                .ToList();
+                .ToListAsync();
 
             var sumDauerauftragEinnahme = dauerauftraege.Where(x => x.IsEinnahme).Sum(x => x.Betrag);
             var sumDauerauftragAusgabe = dauerauftraege.Where(x => !x.IsEinnahme).Sum(x => x.Betrag);
