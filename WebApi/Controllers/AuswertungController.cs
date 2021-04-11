@@ -47,7 +47,7 @@ namespace WebApi.Controllers
 
             return result;
         }
-                
+
         private async Task<decimal> CalcVermoegen(int? year = null, int? month = null)
         {
             decimal result = 0;
