@@ -8,6 +8,7 @@ echo 'export DOTNET_ROOT=$HOME/.dotnet' >> ~/.bashrc
 echo 'export PATH=$PATH:$HOME/.dotnet' >> ~/.bashrc
 source ~/.bashrc
 ```
+source: https://docs.microsoft.com/de-de/dotnet/iot/deployment
 
 ## App starten
 
