@@ -1,6 +1,6 @@
 # Getting Started
 
-## Install Database and Tools
+## Install Apache, PHP, MariaDB
 
 ```
 sudo apt install apache2 -y
@@ -10,14 +10,26 @@ sudo rm index.html
 sudo service apache2 restart
 sudo apt install mariadb-server php-mysql -y
 sudo service apache2 restart
+```
+
+Configure
+
+```
 sudo mysql_secure_installation
-
-sudo nano /etc/mysql/my.cnf
+enter
+y
+set password
+y
+y
+y
+y
 ```
 
-Comment line:
+Configure MySQL:
+
 ```
-#bind-address       = 127.0.0.1
+sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
+comment line with: bind-address = 127.0.0.1
 ```
 
 ```
@@ -42,6 +54,9 @@ exit;
 ```
 sudo phpenmod mysqli
 sudo apt install phpmyadmin -y
+enter
+enter
+set password
 sudo ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
 
 ```
@@ -53,10 +68,21 @@ curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin
 echo 'export DOTNET_ROOT=$HOME/.dotnet' >> ~/.bashrc
 echo 'export PATH=$PATH:$HOME/.dotnet' >> ~/.bashrc
 source ~/.bashrc
+sudo reboot
 ```
 source: https://docs.microsoft.com/de-de/dotnet/iot/deployment
 
 ## Install App
+
+Datenbank anlegen unter [IP]/phpmyadmin mit dem Namen Haushaltsbuch
+Clone Repository
+MySqlHaushaltsbuchContext bearbeiten. IP, User und Passwort setzen
+Program.cs bearbeitem: IP, User, Passwort setzen
+"MySql" => options.UseMySQL("server=192.168.198.37;database=Haushaltsbuch;user=hhuser;password=git1003hub")
+Setzen:  var provider = configuration.GetValue("Provider", "MySql");
+
+Migrations ausführen:
+
 
 ## App starten
 
