@@ -37,7 +37,7 @@ namespace WebApi
                     });
             });
 
-            services.AddDbContext<HaushaltsbuchContext>();
+            //services.AddDbContext<HaushaltsbuchContext>();
 
             services.AddControllers().AddNewtonsoftJson(options => 
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

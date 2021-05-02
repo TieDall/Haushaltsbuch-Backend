@@ -23,10 +23,11 @@ namespace WebApi.Controllers
         [HttpGet("GetBuchungenByMonth/{year}/{month}")]
         public async Task<ActionResult<IEnumerable<Buchung>>> GetBuchungenByMonth(int year, int month)
         {
-            return await _context.Buchungen
+            return _context.Buchungen
                 .Include(x => x.Kategorie)
+                .ToList()
                 .Where(x => x.Buchungstag.Year == year && x.Buchungstag.Month == month)
-                .ToListAsync();
+                .ToList();
         }
 
         [HttpGet("{id}")]
