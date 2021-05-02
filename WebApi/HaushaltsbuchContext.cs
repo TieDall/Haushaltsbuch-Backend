@@ -9,6 +9,10 @@ namespace WebApi
 {
     public class HaushaltsbuchContext : DbContext
     {
+        public HaushaltsbuchContext(DbContextOptions<HaushaltsbuchContext> options) : base(options)
+        { 
+        }
+
         public DbSet<Kategorie> Kategorien { get; set; }
         public DbSet<Buchung> Buchungen { get; set; }
         public DbSet<Dauerauftrag> Dauerauftraege { get; set; }
@@ -20,10 +24,5 @@ namespace WebApi
         public DbSet<Report> Reports { get; set; }
         public DbSet<ReportRow> ReportRows { get; set; }
         public DbSet<ReportItem> ReportItems { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Haushaltsbuch;Integrated Security=True");
-        }
     }
 }
