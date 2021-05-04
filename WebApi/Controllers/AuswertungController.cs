@@ -194,13 +194,14 @@ namespace WebApi.Controllers
             var monthEnd = new DateTime(monthToReturn.Year, monthToReturn.Month, DateTime.DaysInMonth(monthToReturn.Year, monthToReturn.Month));
 
             // Ermittle Summe Buchungen
-            var buchungen = _context.Buchungen.Where(x => x.Buchungstag.Month == monthToReturn.Month && x.Buchungstag.Year == monthToReturn.Year);
+            var buchungen = _context.Buchungen.ToList().Where(x => x.Buchungstag.Month == monthToReturn.Month && x.Buchungstag.Year == monthToReturn.Year);
             var sumBuchungEinnahme = buchungen.Where(x => x.IsEinnahme).Sum(x => x.Betrag);
             var sumBuchungAusgabe = buchungen.Where(x => !x.IsEinnahme).Sum(x => x.Betrag);
 
             // Ermittle Summe Daueraufträge
-            var dauerauftraege = await _context.Dauerauftraege
+            var dauerauftraege = _context.Dauerauftraege
                 .Include(x => x.Kategorie)
+                .ToList()
                 .Where(x =>
                     (
                         x.Intervall == Enums.Intervall.monatlich &&
@@ -235,7 +236,7 @@ namespace WebApi.Controllers
                         && x.Beginn.Month == month
                     )
                 )
-                .ToListAsync();
+                .ToList();
 
             var sumDauerauftragEinnahme = dauerauftraege.Where(x => x.IsEinnahme).Sum(x => x.Betrag);
             var sumDauerauftragAusgabe = dauerauftraege.Where(x => !x.IsEinnahme).Sum(x => x.Betrag);

@@ -129,8 +129,9 @@ namespace WebApi.Controllers
             var monthStart = new DateTime(year, month, 1);
             var monthEnd = new DateTime(year, month, DateTime.DaysInMonth(year, month));
 
-            return await _context.Dauerauftraege
+            return _context.Dauerauftraege
                 .Include(x => x.Kategorie)
+                .ToList()
                 .Where(x =>
                     (
                         x.Intervall == Enums.Intervall.monatlich &&
@@ -165,7 +166,7 @@ namespace WebApi.Controllers
                         && x.Beginn.Month == month
                     )
                 )
-                .ToListAsync();
+                .ToList();
         }
 
         /// <summary>
