@@ -45,7 +45,7 @@ namespace WebApi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutKonfiguration(long id, Konfiguration konfiguration)
+        public async Task<IActionResult> PutKonfiguration(long id, [FromBody] Konfiguration konfiguration)
         {
             if (id != konfiguration.Id)
             {
