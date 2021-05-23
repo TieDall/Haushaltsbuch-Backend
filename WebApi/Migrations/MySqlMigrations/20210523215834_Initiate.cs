@@ -4,7 +4,7 @@ using MySql.EntityFrameworkCore.Metadata;
 
 namespace WebApi.Migrations.MySqlMigrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initiate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

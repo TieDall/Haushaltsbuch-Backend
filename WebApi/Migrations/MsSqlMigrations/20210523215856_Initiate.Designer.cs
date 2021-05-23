@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi;
 
-namespace WebApi.Migrations
+namespace WebApi.Migrations.MsSqlMigrations
 {
-    [DbContext(typeof(HaushaltsbuchContext))]
-    [Migration("20210411110228_AddRuecklage")]
-    partial class AddRuecklage
+    [DbContext(typeof(MsSqlHaushaltsbuchContext))]
+    [Migration("20210523215856_Initiate")]
+    partial class Initiate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

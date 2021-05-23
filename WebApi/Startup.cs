@@ -1,15 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebApi
 {
@@ -37,7 +31,19 @@ namespace WebApi
                     });
             });
 
-            //services.AddDbContext<HaushaltsbuchContext>();
+            switch (Configuration["DbProvider"])
+            {
+                case "MsSql":                    
+                    services.AddDbContext<HaushaltsbuchContext>(options => { options.UseSqlServer(Configuration.GetConnectionString("MsSql")); });
+                    services.AddDbContext<MsSqlHaushaltsbuchContext>(options => { options.UseSqlServer(Configuration.GetConnectionString("MsSql")); });
+                    break;
+                case "MySql":
+                    services.AddDbContext<HaushaltsbuchContext>(options => { options.UseMySQL(Configuration.GetConnectionString("MySql")); });
+                    services.AddDbContext<MySqlHaushaltsbuchContext>(options => { options.UseMySQL(Configuration.GetConnectionString("MySql")); });
+                    break;
+                default:
+                    break;
+            }
 
             services.AddControllers().AddNewtonsoftJson(options => 
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -53,7 +59,25 @@ namespace WebApi
 
             //app.UseHttpsRedirection();
 
-            app.UseRouting();
+            // migrate at Startup
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                switch (Configuration["DbProvider"])
+                {
+                    case "MsSql":
+                        var dbContextMsSql = serviceScope.ServiceProvider.GetService<MsSqlHaushaltsbuchContext>();
+                        dbContextMsSql.Database.Migrate();
+                        break;
+                    case "MySql":
+                        var dbContextMySql = serviceScope.ServiceProvider.GetService<MySqlHaushaltsbuchContext>();
+                        dbContextMySql.Database.Migrate();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+                app.UseRouting();
 
             app.UseCors("AllowAll");
 

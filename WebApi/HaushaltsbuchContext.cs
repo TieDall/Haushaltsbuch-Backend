@@ -7,11 +7,15 @@ using WebApi.Entities;
 
 namespace WebApi
 {
+    /**
+     * Add-Migration [...] -Context MsSqlHaushaltsbuchContext -OutputDir Migrations\MsSqlMigrations
+     * Add-Migration [...] -Context MySqlHaushaltsbuchContext -OutputDir Migrations\MySqlMigrations
+     */
     public class HaushaltsbuchContext : DbContext
     {
-        public HaushaltsbuchContext(DbContextOptions<HaushaltsbuchContext> options) : base(options)
-        { 
-        }
+        public HaushaltsbuchContext() { }
+        public HaushaltsbuchContext(DbContextOptions<HaushaltsbuchContext> options) : base(options) { }
+        protected HaushaltsbuchContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Kategorie> Kategorien { get; set; }
         public DbSet<Buchung> Buchungen { get; set; }

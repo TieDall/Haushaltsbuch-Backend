@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi;
 
-namespace WebApi.Migrations
+namespace WebApi.Migrations.MsSqlMigrations
 {
-    [DbContext(typeof(HaushaltsbuchContext))]
-    partial class HaushaltsbuchContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(MsSqlHaushaltsbuchContext))]
+    partial class MsSqlHaushaltsbuchContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
