@@ -10,5 +10,6 @@ namespace WebApi.Entities
         public string Bezeichnung { get; set; }
         public bool IsEinnahme { get; set; }
         public string Icon { get; set; }
+        public ICollection<Buchung> Buchungen { get; set; }
     }
 }

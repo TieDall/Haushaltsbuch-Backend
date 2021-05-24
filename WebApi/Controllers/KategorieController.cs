@@ -80,7 +80,7 @@ namespace WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Kategorie>> DeleteKategorie(long id)
         {
-            var kategorie = await _context.Kategorien.FindAsync(id);
+            var kategorie = await _context.Kategorien.Include(x => x.Buchungen).FirstOrDefaultAsync(x => x.Id == id);
             if (kategorie == null)
             {
                 return NotFound();

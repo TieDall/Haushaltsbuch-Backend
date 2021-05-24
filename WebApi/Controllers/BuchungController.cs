@@ -20,6 +20,15 @@ namespace WebApi.Controllers
             _context = context;
         }
 
+        [HttpGet("GetBuchungenByKategorie/{kategorieId}")]
+        public async Task<ActionResult<IEnumerable<Buchung>>> GetBuchungenByKategorie(long kategorieId) 
+        {
+            return await _context.Buchungen
+                .Include(x => x.Kategorie)
+                .Where(x => x.KategorieId == kategorieId)
+                .ToListAsync();
+        }
+
         [HttpGet("GetBuchungenByMonth/{year}/{month}")]
         public async Task<ActionResult<IEnumerable<Buchung>>> GetBuchungenByMonth(int year, int month)
         {
