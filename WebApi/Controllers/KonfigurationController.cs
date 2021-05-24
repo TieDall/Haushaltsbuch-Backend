@@ -21,8 +21,21 @@ namespace WebApi.Controllers
         [HttpPost("ResetDatabase")]
         public async Task ResetDatabase()
         {
-            await _context.Database.EnsureDeletedAsync();
-            await _context.Database.EnsureCreatedAsync();
+            _context.Buchungen.RemoveRange(_context.Buchungen.ToList());
+            _context.Dauerauftraege.RemoveRange(_context.Dauerauftraege.ToList());
+            _context.Kategorien.RemoveRange(_context.Kategorien.ToList());
+
+            _context.Gutscheine.RemoveRange(_context.Gutscheine.ToList());
+            _context.Ruecklagen.RemoveRange(_context.Ruecklagen.ToList());
+
+            _context.ReportItems.RemoveRange(_context.ReportItems.ToList());
+            _context.ReportRows.RemoveRange(_context.ReportRows.ToList());
+            _context.Reports.RemoveRange(_context.Reports.ToList());
+
+            _context.Konfigurationen.RemoveRange(_context.Konfigurationen.ToList());
+            await _context.Konfigurationen.AddAsync(new Konfiguration() { Parameter = "Start", Wert = "0" });
+
+            await _context.SaveChangesAsync();
         }
 
         #region CRUD
