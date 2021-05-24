@@ -18,6 +18,13 @@ namespace WebApi.Controllers
             _context = context;
         }
 
+        [HttpPost("ResetDatabase")]
+        public async Task ResetDatabase()
+        {
+            await _context.Database.EnsureDeletedAsync();
+            await _context.Database.EnsureCreatedAsync();
+        }
+
         #region CRUD
 
         // GET: api/Konfiguration
