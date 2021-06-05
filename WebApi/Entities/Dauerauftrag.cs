@@ -20,6 +20,6 @@ namespace WebApi.Entities
         public long? KategorieId { get; set; }
         public Kategorie Kategorie { get; set; }
 
-        public bool IsAktiv => Ende == null || DateTime.Now <= Ende;
+        public bool IsAktiv => (Beginn <= DateTime.Now) && (Ende == null || DateTime.Now <= Ende);
     }
 }
