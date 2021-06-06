@@ -32,6 +32,12 @@ namespace WebApi.Migrations.MySqlMigrations
                     b.Property<DateTime>("Buchungstag")
                         .HasColumnType("datetime");
 
+                    b.Property<DateTime>("Changed")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime");
+
                     b.Property<bool>("IsEinnahme")
                         .HasColumnType("tinyint(1)");
 
@@ -59,6 +65,12 @@ namespace WebApi.Migrations.MySqlMigrations
 
                     b.Property<string>("Bezeichnung")
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("Changed")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime?>("Ende")
                         .HasColumnType("datetime");
@@ -97,6 +109,12 @@ namespace WebApi.Migrations.MySqlMigrations
                     b.Property<string>("Bezeichnung")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("Changed")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime");
+
                     b.HasKey("Id");
 
                     b.ToTable("Gutscheine");
@@ -110,6 +128,12 @@ namespace WebApi.Migrations.MySqlMigrations
 
                     b.Property<string>("Bezeichnung")
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("Changed")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Icon")
                         .HasColumnType("text");
@@ -127,6 +151,12 @@ namespace WebApi.Migrations.MySqlMigrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Changed")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Parameter")
                         .HasColumnType("text");
@@ -148,6 +178,12 @@ namespace WebApi.Migrations.MySqlMigrations
                     b.Property<string>("Bezeichnung")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("Changed")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime");
+
                     b.HasKey("Id");
 
                     b.ToTable("Reports");
@@ -159,8 +195,14 @@ namespace WebApi.Migrations.MySqlMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("Changed")
+                        .HasColumnType("datetime");
+
                     b.Property<string>("Config")
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime");
 
                     b.Property<int>("Position")
                         .HasColumnType("int");
@@ -184,6 +226,12 @@ namespace WebApi.Migrations.MySqlMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("Changed")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime");
+
                     b.Property<int>("Position")
                         .HasColumnType("int");
 
@@ -206,6 +254,12 @@ namespace WebApi.Migrations.MySqlMigrations
                     b.Property<string>("Bezeichnung")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("Changed")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime");
+
                     b.Property<decimal>("Summe")
                         .HasColumnType("decimal(18, 2)");
 
@@ -217,7 +271,7 @@ namespace WebApi.Migrations.MySqlMigrations
             modelBuilder.Entity("WebApi.Entities.Buchung", b =>
                 {
                     b.HasOne("WebApi.Entities.Kategorie", "Kategorie")
-                        .WithMany()
+                        .WithMany("Buchungen")
                         .HasForeignKey("KategorieId");
 
                     b.Navigation("Kategorie");
@@ -252,6 +306,11 @@ namespace WebApi.Migrations.MySqlMigrations
                         .IsRequired();
 
                     b.Navigation("Report");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.Kategorie", b =>
+                {
+                    b.Navigation("Buchungen");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Report", b =>
