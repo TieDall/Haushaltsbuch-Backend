@@ -1,13 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Net.Http.Headers;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using WebApi.Entities;
 
@@ -94,21 +88,6 @@ namespace WebApi.Controllers
             await _context.SaveChangesAsync();
 
             return kategorie;
-        }
-
-        [HttpGet("Export")]
-        public async Task<IActionResult> Export() 
-        {
-            var kategorien = await _context.Kategorien.ToListAsync();
-
-            var kategorienJson = JsonSerializer.Serialize(kategorien);
-
-            var fileStream = new MemoryStream(Encoding.ASCII.GetBytes(kategorienJson));
-
-            return new FileStreamResult(fileStream, new MediaTypeHeaderValue("application/json"))
-            {
-                FileDownloadName = $"kategorien{DateTime.Now:yyyyMMddHHmmss}.json"
-            };
         }
 
         private bool KategorieExists(long id)
