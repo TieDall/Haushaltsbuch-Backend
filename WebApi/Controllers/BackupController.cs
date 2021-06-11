@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WebApi.Entities;
+using WebApi.ViewModels;
 
 namespace WebApi.Controllers
 {
@@ -200,9 +201,9 @@ namespace WebApi.Controllers
             _context.Gutscheine.RemoveRange(_context.Gutscheine.ToList());
             _context.Ruecklagen.RemoveRange(_context.Ruecklagen.ToList());
 
-            _context.ReportItems.RemoveRange(_context.ReportItems.ToList());
-            _context.ReportRows.RemoveRange(_context.ReportRows.ToList());
-            _context.Reports.RemoveRange(_context.Reports.ToList());
+            //_context.ReportItems.RemoveRange(_context.ReportItems.ToList());
+            //_context.ReportRows.RemoveRange(_context.ReportRows.ToList());
+            //_context.Reports.RemoveRange(_context.Reports.ToList());
 
             _context.Konfigurationen.RemoveRange(_context.Konfigurationen.ToList());
             //await _context.Konfigurationen.AddAsync(new Konfiguration() { Parameter = "Start", Wert = "0" });
@@ -288,7 +289,14 @@ namespace WebApi.Controllers
             }
             transaction6.Commit();
 
-            return Ok(); 
+            return Ok(new ImportResult() 
+            {
+                AnzahlBuchungen = buchungen.Length,
+                AnzahlDauerauftraege = dauerauftraege.Length,
+                AnzahlGutscheine = gutscheine.Length,
+                AnzahlKategorien = kategorien.Length,
+                AnzahlRuecklagen = ruecklagen.Length
+            });
         }
     }
 }
