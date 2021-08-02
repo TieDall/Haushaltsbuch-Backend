@@ -64,7 +64,7 @@ namespace WebApi.Controllers
             }
 
             // Ermittle konfiguriertes Startkapital
-            var startKapital = decimal.Parse(_context.Konfigurationen.FirstOrDefault(x => x.Parameter.Equals("Start")).Wert);
+            var startKapital = decimal.Parse(_context.Konfigurationen.FirstOrDefault(x => x.Parameter.Equals("Start")).Wert, System.Globalization.NumberStyles.AllowDecimalPoint);
 
             // Ermittle Summe Buchungen
             var buchungen = _context.Buchungen.Where(x => x.Buchungstag <= monthToReturn);
