@@ -1,3 +1,5 @@
+[![build](https://github.com/TieDall/Haushaltsbuch-Backend/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/TieDall/Haushaltsbuch-Backend/actions/workflows/build.yml)
+
 # Getting Started
 
 ## Install Apache, PHP, MariaDB
