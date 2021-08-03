@@ -2,16 +2,10 @@
 
 # Getting Started
 
-## Install Apache, PHP, MariaDB
+## Install MariaDB
 
 ```
-sudo apt install apache2 -y
-sudo apt install php -y
-cd /var/www/html
-sudo rm index.html
-sudo service apache2 restart
-sudo apt install mariadb-server php-mysql -y
-sudo service apache2 restart
+sudo apt install mariadb-server -y
 ```
 
 Configure
@@ -53,16 +47,6 @@ FLUSH PRIVILEGES;
 exit;
 ```
 
-```
-sudo phpenmod mysqli
-sudo apt install phpmyadmin -y
-enter
-enter
-set password
-sudo ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
-
-```
-
 ## Install .NET
 
 ```
@@ -76,18 +60,13 @@ source: https://docs.microsoft.com/de-de/dotnet/iot/deployment
 
 ## Install App
 
-Datenbank anlegen unter [IP]/phpmyadmin mit dem Namen Haushaltsbuch
 Clone Repository
-MySqlHaushaltsbuchContext bearbeiten. IP, User und Passwort setzen
-Program.cs bearbeitem: IP, User, Passwort setzen
-"MySql" => options.UseMySQL("server=192.168.198.37;database=Haushaltsbuch;user=hhuser;password=git1003hub")
-Setzen:  var provider = configuration.GetValue("Provider", "MySql");
-
-Migrations ausführen:
-
+binaries erstellen
+appsettings bearbeiten. IP, User und Passwort setzen
+./WebAPI ausführbar machen (chmod 755)
 
 ## App starten
 
 ```
-dotnet run --urls=http://0.0.0.0:44304/ --project [path to project]/Haushaltsbuch-Backend/WebApi/WebApi.csproj
+dotnet run --urls=http://0.0.0.0:44304/
 ```
