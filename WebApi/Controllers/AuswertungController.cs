@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -64,7 +65,8 @@ namespace WebApi.Controllers
             }
 
             // Ermittle konfiguriertes Startkapital
-            var startKapital = decimal.Parse(_context.Konfigurationen.FirstOrDefault(x => x.Parameter.Equals("Start")).Wert, System.Globalization.NumberStyles.AllowDecimalPoint);
+            var startKapitalKonfigValue = _context.Konfigurationen.FirstOrDefault(x => x.Parameter.Equals("Start")).Wert;
+            var startKapital = decimal.Parse(startKapitalKonfigValue, NumberStyles.AllowDecimalPoint, new CultureInfo("de-DE"));
 
             // Ermittle Summe Buchungen
             var buchungen = _context.Buchungen.Where(x => x.Buchungstag <= monthToReturn);
