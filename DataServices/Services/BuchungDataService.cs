@@ -4,17 +4,20 @@ using AutoMapper;
 using System.Collections.Generic;
 using BusinessModels;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataServices.Services
 {
     public class BuchungDataService : DataService<BusinessModels.Buchung, Entities.Buchung>, IBuchungDataService
     {
+        private readonly HaushaltsbuchContext _haushaltsbuchContext;
         private readonly IMapper _mapper;
 
         public BuchungDataService(
             HaushaltsbuchContext haushaltsbuchContext,
             IMapper mapper): base(haushaltsbuchContext, mapper) 
         {
+            _haushaltsbuchContext = haushaltsbuchContext;
             _mapper = mapper;
         }
 
@@ -29,5 +32,11 @@ namespace DataServices.Services
 
             return result;
         }
+
+        public override IQueryable<Entities.Buchung> GetDefaultQuery()
+        {
+            return _haushaltsbuchContext.Set<Entities.Buchung>().Include(x => x.Kategorie);
+        }
+
     }
 }

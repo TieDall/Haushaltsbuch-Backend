@@ -56,7 +56,7 @@ namespace DataServices.Services.Base
             return _mapper.Map<List<TModel>>(entity);
         }
 
-        public IQueryable<TEntity> GetDefaultQuery()
+        public virtual IQueryable<TEntity> GetDefaultQuery()
         {
             return _haushaltsbuchContext.Set<TEntity>();
         }
@@ -68,7 +68,7 @@ namespace DataServices.Services.Base
             _haushaltsbuchContext.Update(entity);
             await _haushaltsbuchContext.SaveChangesAsync();
 
-            return _mapper.Map<TModel>(entity);
+            return await Get(entity.Id);
         }
     }
 }
