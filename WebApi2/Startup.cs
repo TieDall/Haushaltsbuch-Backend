@@ -63,6 +63,7 @@ namespace WebApi2
             // Add DataServices
             services.AddTransient<IBuchungDataService, BuchungDataService>();
             services.AddTransient<IKategorieDataService, KategorieDataService>();
+            services.AddTransient<IDataService<BusinessModels.Gutschein, DataServices.Entities.Gutschein>, GutscheinDataService>();
 
             // Add CORS rule
             services.AddCors(options =>
