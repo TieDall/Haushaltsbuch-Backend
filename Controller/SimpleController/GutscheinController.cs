@@ -1,4 +1,4 @@
-﻿using DataServices.Services.Base;
+﻿using DataServices.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Controller.SimpleController
@@ -8,7 +8,7 @@ namespace Controller.SimpleController
     public class GutscheinController : CrudController<BusinessModels.Gutschein, DataServices.Entities.Gutschein>
     {
         public GutscheinController(
-            IDataService<BusinessModels.Gutschein, DataServices.Entities.Gutschein> dataService) : base(dataService)
+            IGutscheinDataService dataService) : base(dataService)
         {
         }
     }
