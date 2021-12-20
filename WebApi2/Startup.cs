@@ -61,9 +61,15 @@ namespace WebApi2
                 .AddApplicationPart(typeof(RuecklageController).Assembly);
 
             // Add DataServices
+            // Buchung
+            services.AddTransient<IDataService<BusinessModels.Buchung, DataServices.Entities.Buchung>, BuchungDataService>();
             services.AddTransient<IBuchungDataService, BuchungDataService>();
+            // Kategorie
+            services.AddTransient<IDataService<BusinessModels.Kategorie, DataServices.Entities.Kategorie>, KategorieDataService>();
             services.AddTransient<IKategorieDataService, KategorieDataService>();
+            // Gutschein
             services.AddTransient<IDataService<BusinessModels.Gutschein, DataServices.Entities.Gutschein>, GutscheinDataService>();
+            services.AddTransient<IGutscheinDataService, GutscheinDataService>();
 
             // Add CORS rule
             services.AddCors(options =>
