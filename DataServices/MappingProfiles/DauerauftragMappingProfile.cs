@@ -7,11 +7,12 @@ namespace DataServices.MappingProfiles
     {
         public DauerauftragMappingProfile()
         {
+            // TODO 
             CreateMap<Entities.Dauerauftrag, BusinessModels.Dauerauftrag>()
-                .ForMember(
-                    model => model.IsAktiv, 
-                    opt => opt.MapFrom(
-                        entity => (entity.Beginn <= DateTime.Now) && (entity.Ende == null || DateTime.Now <= entity.Ende)))
+                //.ForMember(
+                //    model => model.IsAktiv, 
+                //    opt => opt.MapFrom(
+                //        entity => (entity.Beginn <= DateTime.Now) && (entity.Ende == null || DateTime.Now <= entity.Ende)))
                 .ReverseMap();
         }
     }

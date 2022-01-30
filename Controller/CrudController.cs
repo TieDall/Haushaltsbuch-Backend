@@ -19,32 +19,32 @@ namespace Controller
         }
 
         [HttpPost]
-        public async Task<ActionResult<TModel>> Add(TModel model)
+        public virtual async Task<ActionResult<TModel>> Add(TModel model)
         {
             var result = await _dataService.Add(model);
             return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
         }
 
         [HttpGet]
-        public async Task<ActionResult<TModel>> Get()
+        public virtual async Task<ActionResult<TModel>> Get()
         {
             return Ok(await _dataService.Get());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TModel>> Get(long id)
+        public virtual async Task<ActionResult<TModel>> Get(long id)
         {
             return Ok(await _dataService.Get(id));
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<TModel>> Update(long id, TModel model)
+        public virtual async Task<ActionResult<TModel>> Update(long id, TModel model)
         {
             return Ok(await _dataService.Update(model));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(long id)
+        public virtual async Task<IActionResult> Delete(long id)
         {
             await _dataService.Delete(id);
             return Ok();

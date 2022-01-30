@@ -2,6 +2,7 @@
 using DataServices.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Controller.SimpleController
 {
@@ -15,6 +16,12 @@ namespace Controller.SimpleController
             IBuchungDataService buchungDataService) : base(buchungDataService)
         {
             _buchungDataService = buchungDataService;
+        }
+
+        [HttpGet]
+        public override async Task<ActionResult<BusinessModels.Buchung>> Get()
+        {
+            return await Task.FromResult(NotFound());
         }
 
         [HttpGet("GetByMonth/{year}/{month}")]

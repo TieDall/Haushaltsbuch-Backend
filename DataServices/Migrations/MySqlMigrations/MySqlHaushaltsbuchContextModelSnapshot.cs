@@ -141,12 +141,7 @@ namespace DataServices.Migrations.MySqlMigrations
                     b.Property<bool>("IsEinnahme")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<long?>("KategorieId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("KategorieId");
 
                     b.ToTable("Kategorien");
                 });
@@ -209,7 +204,7 @@ namespace DataServices.Migrations.MySqlMigrations
             modelBuilder.Entity("DataServices.Entities.Dauerauftrag", b =>
                 {
                     b.HasOne("DataServices.Entities.Kategorie", "Kategorie")
-                        .WithMany()
+                        .WithMany("Dauerauftraege")
                         .HasForeignKey("KategorieId");
 
                     b.Navigation("Kategorie");
@@ -217,16 +212,9 @@ namespace DataServices.Migrations.MySqlMigrations
 
             modelBuilder.Entity("DataServices.Entities.Kategorie", b =>
                 {
-                    b.HasOne("DataServices.Entities.Kategorie", null)
-                        .WithMany("Kategorien")
-                        .HasForeignKey("KategorieId");
-                });
-
-            modelBuilder.Entity("DataServices.Entities.Kategorie", b =>
-                {
                     b.Navigation("Buchungen");
 
-                    b.Navigation("Kategorien");
+                    b.Navigation("Dauerauftraege");
                 });
 #pragma warning restore 612, 618
         }

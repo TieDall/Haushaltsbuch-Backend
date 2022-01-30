@@ -70,6 +70,9 @@ namespace WebApi2
             // Gutschein
             services.AddTransient<IDataService<BusinessModels.Gutschein, DataServices.Entities.Gutschein>, GutscheinDataService>();
             services.AddTransient<IGutscheinDataService, GutscheinDataService>();
+            // Dauerauftrag
+            services.AddTransient<IDataService<BusinessModels.Dauerauftrag, DataServices.Entities.Dauerauftrag>, DauerauftragDataService>();
+            services.AddTransient<IDauerauftragDataService, DauerauftragDataService>();
 
             // Add CORS rule
             services.AddCors(options =>
